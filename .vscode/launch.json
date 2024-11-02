@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Ejecutar frontend",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildfrontend",
+            "cwd": "${workspaceFolder}/Frontend",
+            "program": "dotnet",
+            "args": [
+                "run",
+                "--urls",
+                "http://localhost:5000"
+            ],
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
+    ]
+}
