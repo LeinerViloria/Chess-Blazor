@@ -1,4 +1,5 @@
-﻿using ChessAI.Models;
+﻿using ChessAI.Game.Enums;
+using ChessAI.Models;
 
 namespace ChessAI.Game
 {
@@ -12,7 +13,7 @@ namespace ChessAI.Game
         /// </summary>
         public void UpdateTarget(ChessPiece piece, ChessMove move)
         {
-            if (piece.Type == ChessPiece.PieceType.Pawn && Math.Abs(move.ToRow - move.FromRow) == 2)
+            if (piece.Type == PieceType.Pawn && Math.Abs(move.ToRow - move.FromRow) == 2)
             {
                 var enPassantRow = (move.FromRow + move.ToRow) / 2;
                 var enPassantCol = (char)('a' + move.FromCol);

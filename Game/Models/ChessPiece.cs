@@ -1,25 +1,9 @@
-﻿using ChessAI.Models;
+﻿using ChessAI.Game.Enums;
 
 namespace ChessAI.Models;
 
 public class ChessPiece
 {
-    public enum PieceColor
-    {
-        White,
-        Black
-    }
-
-    public enum PieceType
-    {
-        Pawn,
-        Rook,
-        Knight,
-        Bishop,
-        Queen,
-        King
-    }
-
     public ChessPiece(PieceType type, PieceColor color, int row, int col)
     {
         Type = type;

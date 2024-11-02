@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using ChessAI.Game;
+using ChessAI.Game.Enums;
 
 namespace ChessAI.Models;
 
@@ -42,33 +43,33 @@ public class ChessBoard
     {
         ChessPiece?[] initialWhitePieces =
         {
-            new(ChessPiece.PieceType.Rook, ChessPiece.PieceColor.White, 0, 0),
-            new(ChessPiece.PieceType.Knight, ChessPiece.PieceColor.White, 0, 1),
-            new(ChessPiece.PieceType.Bishop, ChessPiece.PieceColor.White, 0, 2),
-            new(ChessPiece.PieceType.Queen, ChessPiece.PieceColor.White, 0, 3),
-            new(ChessPiece.PieceType.King, ChessPiece.PieceColor.White, 0, 4),
-            new(ChessPiece.PieceType.Bishop, ChessPiece.PieceColor.White, 0, 5),
-            new(ChessPiece.PieceType.Knight, ChessPiece.PieceColor.White, 0, 6),
-            new(ChessPiece.PieceType.Rook, ChessPiece.PieceColor.White, 0, 7)
+            new(PieceType.Rook, PieceColor.White, 0, 0),
+            new(PieceType.Knight, PieceColor.White, 0, 1),
+            new(PieceType.Bishop, PieceColor.White, 0, 2),
+            new(PieceType.Queen, PieceColor.White, 0, 3),
+            new(PieceType.King, PieceColor.White, 0, 4),
+            new(PieceType.Bishop, PieceColor.White, 0, 5),
+            new(PieceType.Knight, PieceColor.White, 0, 6),
+            new(PieceType.Rook, PieceColor.White, 0, 7)
         };
 
         ChessPiece?[] initialBlackPieces =
         {
-            new(ChessPiece.PieceType.Rook, ChessPiece.PieceColor.Black, 7, 0),
-            new(ChessPiece.PieceType.Knight, ChessPiece.PieceColor.Black, 7, 1),
-            new(ChessPiece.PieceType.Bishop, ChessPiece.PieceColor.Black, 7, 2),
-            new(ChessPiece.PieceType.Queen, ChessPiece.PieceColor.Black, 7, 3),
-            new(ChessPiece.PieceType.King, ChessPiece.PieceColor.Black, 7, 4),
-            new(ChessPiece.PieceType.Bishop, ChessPiece.PieceColor.Black, 7, 5),
-            new(ChessPiece.PieceType.Knight, ChessPiece.PieceColor.Black, 7, 6),
-            new(ChessPiece.PieceType.Rook, ChessPiece.PieceColor.Black, 7, 7)
+            new(PieceType.Rook, PieceColor.Black, 7, 0),
+            new(PieceType.Knight, PieceColor.Black, 7, 1),
+            new(PieceType.Bishop, PieceColor.Black, 7, 2),
+            new(PieceType.Queen, PieceColor.Black, 7, 3),
+            new(PieceType.King, PieceColor.Black, 7, 4),
+            new(PieceType.Bishop, PieceColor.Black, 7, 5),
+            new(PieceType.Knight, PieceColor.Black, 7, 6),
+            new(PieceType.Rook, PieceColor.Black, 7, 7)
         };
 
         for (var i = 0; i < 8; i++)
         {
             Pieces[0, i] = initialWhitePieces[i];
-            Pieces[1, i] = new ChessPiece(ChessPiece.PieceType.Pawn, ChessPiece.PieceColor.White, 1, i);
-            Pieces[6, i] = new ChessPiece(ChessPiece.PieceType.Pawn, ChessPiece.PieceColor.Black, 6, i);
+            Pieces[1, i] = new ChessPiece(PieceType.Pawn, PieceColor.White, 1, i);
+            Pieces[6, i] = new ChessPiece(PieceType.Pawn, PieceColor.Black, 6, i);
             Pieces[7, i] = initialBlackPieces[i];
         }
     }
@@ -102,7 +103,7 @@ public class ChessBoard
         if (piece != null)
         {
             // Detect castling attempt
-            if (piece.Type == ChessPiece.PieceType.King && Math.Abs(move.ToCol - move.FromCol) == 2)
+            if (piece.Type == PieceType.King && Math.Abs(move.ToCol - move.FromCol) == 2)
             {
                 var kingside = move.ToCol > move.FromCol;
                 if (Castling.CanCastle(piece.Color, kingside))
@@ -161,7 +162,7 @@ public class ChessBoard
     /// <summary>
     ///     Determines if the given color's king is in check.
     /// </summary>
-    public bool IsInCheck(ChessPiece.PieceColor color)
+    public bool IsInCheck(PieceColor color)
     {
         var king = GetKing(color);
         return king != null && IsSquareUnderAttack(king.Row, king.Col, color);
@@ -170,7 +171,7 @@ public class ChessBoard
     /// <summary>
     ///     Determines if the given color is in checkmate.
     /// </summary>
-    public bool IsCheckmate(ChessPiece.PieceColor color)
+    public bool IsCheckmate(PieceColor color)
     {
         if (!IsInCheck(color))
         {
@@ -192,7 +193,7 @@ public class ChessBoard
     /// <summary>
     ///     Determines if the game is in stalemate for the given color.
     /// </summary>
-    public bool IsStalemate(ChessPiece.PieceColor color)
+    public bool IsStalemate(PieceColor color)
     {
         if (IsInCheck(color))
         {
@@ -237,23 +238,23 @@ public class ChessBoard
         {
             switch (piece.Type)
             {
-                case ChessPiece.PieceType.Pawn:
+                case PieceType.Pawn:
                     moves.AddRange(GetPawnMoves(piece));
                     break;
-                case ChessPiece.PieceType.Rook:
+                case PieceType.Rook:
                     moves.AddRange(GetLinearMoves(piece, [(-1, 0), (1, 0), (0, -1), (0, 1)]));
                     break;
-                case ChessPiece.PieceType.Knight:
+                case PieceType.Knight:
                     moves.AddRange(GetKnightMoves(piece));
                     break;
-                case ChessPiece.PieceType.Bishop:
+                case PieceType.Bishop:
                     moves.AddRange(GetLinearMoves(piece, [(-1, -1), (-1, 1), (1, -1), (1, 1)]));
                     break;
-                case ChessPiece.PieceType.Queen:
+                case PieceType.Queen:
                     moves.AddRange(GetLinearMoves(piece,
                         [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]));
                     break;
-                case ChessPiece.PieceType.King:
+                case PieceType.King:
                     moves.AddRange(GetKingMovesWithoutCheck(piece));
                     moves.AddRange(GetCastlingMoves(piece));
                     break;
@@ -275,8 +276,8 @@ public class ChessBoard
             return moves;
         }
 
-        var direction = piece.Color == ChessPiece.PieceColor.White ? 1 : -1;
-        var startRow = piece.Color == ChessPiece.PieceColor.White ? 1 : 6;
+        var direction = piece.Color == PieceColor.White ? 1 : -1;
+        var startRow = piece.Color == PieceColor.White ? 1 : 6;
 
         if (IsValidSquare(piece.Row + direction, piece.Col) && Pieces[piece.Row + direction, piece.Col] == null)
         {
@@ -427,22 +428,22 @@ public class ChessBoard
     /// <summary>
     ///     Checks whether a given square is under attack by any opposing piece.
     /// </summary>
-    private bool IsSquareUnderAttack(int row, int col, ChessPiece.PieceColor defendingColor)
+    private bool IsSquareUnderAttack(int row, int col, PieceColor defendingColor)
     {
-        var attackingColor = defendingColor == ChessPiece.PieceColor.White
-            ? ChessPiece.PieceColor.Black
-            : ChessPiece.PieceColor.White;
+        var attackingColor = defendingColor == PieceColor.White
+            ? PieceColor.Black
+            : PieceColor.White;
 
         // Check for attacks by pawns
-        if (attackingColor == ChessPiece.PieceColor.White)
+        if (attackingColor == PieceColor.White)
         {
-            if (IsValidSquare(row - 1, col - 1) && Pieces[row - 1, col - 1]?.Type == ChessPiece.PieceType.Pawn &&
+            if (IsValidSquare(row - 1, col - 1) && Pieces[row - 1, col - 1]?.Type == PieceType.Pawn &&
                 Pieces[row - 1, col - 1]?.Color == attackingColor)
             {
                 return true;
             }
 
-            if (IsValidSquare(row - 1, col + 1) && Pieces[row - 1, col + 1]?.Type == ChessPiece.PieceType.Pawn &&
+            if (IsValidSquare(row - 1, col + 1) && Pieces[row - 1, col + 1]?.Type == PieceType.Pawn &&
                 Pieces[row - 1, col + 1]?.Color == attackingColor)
             {
                 return true;
@@ -450,13 +451,13 @@ public class ChessBoard
         }
         else
         {
-            if (IsValidSquare(row + 1, col - 1) && Pieces[row + 1, col - 1]?.Type == ChessPiece.PieceType.Pawn &&
+            if (IsValidSquare(row + 1, col - 1) && Pieces[row + 1, col - 1]?.Type == PieceType.Pawn &&
                 Pieces[row + 1, col - 1]?.Color == attackingColor)
             {
                 return true;
             }
 
-            if (IsValidSquare(row + 1, col + 1) && Pieces[row + 1, col + 1]?.Type == ChessPiece.PieceType.Pawn &&
+            if (IsValidSquare(row + 1, col + 1) && Pieces[row + 1, col + 1]?.Type == PieceType.Pawn &&
                 Pieces[row + 1, col + 1]?.Color == attackingColor)
             {
                 return true;
@@ -474,7 +475,7 @@ public class ChessBoard
                 var newRow = row + rowOffset;
                 var newCol = col + colOffset;
 
-                if (IsValidSquare(newRow, newCol) && Pieces[newRow, newCol]?.Type == ChessPiece.PieceType.Knight &&
+                if (IsValidSquare(newRow, newCol) && Pieces[newRow, newCol]?.Type == PieceType.Knight &&
                     Pieces[newRow, newCol]?.Color == attackingColor)
                     {
                         return true;
@@ -497,9 +498,9 @@ public class ChessBoard
                 {
                     if (piece.Color == attackingColor)
                     {
-                        if ((piece.Type == ChessPiece.PieceType.Bishop && Math.Abs(dRow) == Math.Abs(dCol)) ||
-                            (piece.Type == ChessPiece.PieceType.Rook && (dRow == 0 || dCol == 0)) ||
-                            piece.Type == ChessPiece.PieceType.Queen)
+                        if ((piece.Type == PieceType.Bishop && Math.Abs(dRow) == Math.Abs(dCol)) ||
+                            (piece.Type == PieceType.Rook && (dRow == 0 || dCol == 0)) ||
+                            piece.Type == PieceType.Queen)
                         {
                             return true;
                         }
@@ -523,7 +524,7 @@ public class ChessBoard
                 var newRow = row + dRow;
                 var newCol = col + dCol;
 
-                if (IsValidSquare(newRow, newCol) && Pieces[newRow, newCol]?.Type == ChessPiece.PieceType.King &&
+                if (IsValidSquare(newRow, newCol) && Pieces[newRow, newCol]?.Type == PieceType.King &&
                     Pieces[newRow, newCol]?.Color == attackingColor)
                     {
                         return true;
@@ -579,14 +580,14 @@ public class ChessBoard
     /// <summary>
     ///     Returns the king piece of the given color.
     /// </summary>
-    private ChessPiece GetKing(ChessPiece.PieceColor color)
+    private ChessPiece GetKing(PieceColor color)
     {
         for (var row = 0; row < 8; row++)
         {
             for (var col = 0; col < 8; col++)
         {
             var piece = Pieces[row, col];
-            if (piece != null && piece.Type == ChessPiece.PieceType.King && piece.Color == color)
+            if (piece != null && piece.Type == PieceType.King && piece.Color == color)
                 {
                     return piece;
                 }
@@ -599,7 +600,7 @@ public class ChessBoard
     /// <summary>
     ///     Returns all pieces of the given color.
     /// </summary>
-    public IEnumerable<ChessPiece?> GetPieces(ChessPiece.PieceColor color)
+    public IEnumerable<ChessPiece?> GetPieces(PieceColor color)
     {
         for (var row = 0; row < 8; row++)
         {
@@ -669,7 +670,7 @@ public class ChessBoard
     /// </summary>
     private string GetActiveColor()
     {
-        return State.ActiveColor == ChessPiece.PieceColor.White ? "w" : "b";
+        return State.ActiveColor == PieceColor.White ? "w" : "b";
     }
 
     /// <summary>
@@ -708,15 +709,15 @@ public class ChessBoard
     {
         var c = piece.Type switch
         {
-            ChessPiece.PieceType.Pawn => 'p',
-            ChessPiece.PieceType.Rook => 'r',
-            ChessPiece.PieceType.Knight => 'n',
-            ChessPiece.PieceType.Bishop => 'b',
-            ChessPiece.PieceType.Queen => 'q',
-            ChessPiece.PieceType.King => 'k',
+            PieceType.Pawn => 'p',
+            PieceType.Rook => 'r',
+            PieceType.Knight => 'n',
+            PieceType.Bishop => 'b',
+            PieceType.Queen => 'q',
+            PieceType.King => 'k',
             _ => throw new ArgumentException("Invalid piece type")
         };
-        return piece.Color == ChessPiece.PieceColor.White ? char.ToUpper(c) : c;
+        return piece.Color == PieceColor.White ? char.ToUpper(c) : c;
     }
 
     #endregion

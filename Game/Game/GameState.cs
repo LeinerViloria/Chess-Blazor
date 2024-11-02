@@ -1,4 +1,5 @@
-﻿using ChessAI.Models;
+﻿using ChessAI.Game.Enums;
+using ChessAI.Models;
 
 namespace ChessAI.Game
 {
@@ -6,7 +7,7 @@ namespace ChessAI.Game
     public class GameState
     {
         // Tracks the active player's turn (White or Black)
-        public ChessPiece.PieceColor ActiveColor { get; set; } = ChessPiece.PieceColor.White;
+        public PieceColor ActiveColor { get; set; } = PieceColor.White;
 
         // Tracks the number of halfmoves since the last capture or pawn move (for fifty-move rule)
         public int HalfmoveClock { get; set; }
@@ -16,15 +17,15 @@ namespace ChessAI.Game
 
         public void ToggleActiveColor()
         {
-            ActiveColor = ActiveColor == ChessPiece.PieceColor.White
-                ? ChessPiece.PieceColor.Black
-                : ChessPiece.PieceColor.White;
+            ActiveColor = ActiveColor == PieceColor.White
+                ? PieceColor.Black
+                : PieceColor.White;
         }
 
         public void UpdateHalfmoveClock(ChessPiece piece, ChessMove move, ChessPiece?[,] pieces)
         {
             // Check if a pawn moved or a capture occurred at the destination square
-            if (piece.Type == ChessPiece.PieceType.Pawn || pieces[move.ToRow, move.ToCol] != null)
+            if (piece.Type == PieceType.Pawn || pieces[move.ToRow, move.ToCol] != null)
                 HalfmoveClock = 0;
             else
                 HalfmoveClock++;
@@ -32,13 +33,13 @@ namespace ChessAI.Game
 
         public void UpdateFullmoveNumber()
         {
-            if (ActiveColor == ChessPiece.PieceColor.White)
+            if (ActiveColor == PieceColor.White)
                 FullmoveNumber++;
         }
 
         public void ResetGame()
         {
-            ActiveColor = ChessPiece.PieceColor.White;  
+            ActiveColor = PieceColor.White;  
         }
     }
 }

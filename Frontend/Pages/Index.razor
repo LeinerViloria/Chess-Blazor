@@ -109,20 +109,20 @@
 
    private string GetRowLabel(int rowIndex) => (8 - rowIndex).ToString();
    private string GetPieceColor(ChessPiece? piece) => 
-    piece != null && piece.Color is ChessPiece.PieceColor.White ? "white-piece" : "black-piece";
+    piece != null && piece.Color is PieceColor.White ? "white-piece" : "black-piece";
 
    private string GetPieceImagePath(ChessPiece? piece)
    {
        if (piece == null) return string.Empty;
-       var color = piece.Color == ChessPiece.PieceColor.White ? "w" : "b";
+       var color = piece.Color == PieceColor.White ? "w" : "b";
        var pieceType = piece.Type switch
        {
-           ChessPiece.PieceType.Pawn => "p",
-           ChessPiece.PieceType.Rook => "r",
-           ChessPiece.PieceType.Knight => "n",
-           ChessPiece.PieceType.Bishop => "b",
-           ChessPiece.PieceType.Queen => "q",
-           ChessPiece.PieceType.King => "k",
+           PieceType.Pawn => "p",
+           PieceType.Rook => "r",
+           PieceType.Knight => "n",
+           PieceType.Bishop => "b",
+           PieceType.Queen => "q",
+           PieceType.King => "k",
            _ => throw new ArgumentException("Invalid piece type")
        };
        return $"/images/chess-pieces/{color}{pieceType}.svg";
@@ -187,7 +187,7 @@
    private async Task CheckGameState()
    {
        var currentColor = State.ActiveColor;
-       var previousColor = currentColor == ChessPiece.PieceColor.White ? ChessPiece.PieceColor.Black : ChessPiece.PieceColor.White;
+       var previousColor = currentColor == PieceColor.White ? PieceColor.Black : PieceColor.White;
        const string Message = "Jaque mate! {0} acaba de ganar!";
 
        if (Board.IsCheckmate(previousColor))
