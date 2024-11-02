@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35208.52
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{0D667B21-9C53-4647-A026-DDF2EDA3A3FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{3AD5A593-768D-4131-9F45-0F8FADC92994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameTest", "Tests\GameTest.csproj", "{24229F7B-217A-468D-A1B6-DEE70642EB10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{3AD5A593-768D-4131-9F45-0F8FADC92994}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AD5A593-768D-4131-9F45-0F8FADC92994}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AD5A593-768D-4131-9F45-0F8FADC92994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24229F7B-217A-468D-A1B6-DEE70642EB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24229F7B-217A-468D-A1B6-DEE70642EB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24229F7B-217A-468D-A1B6-DEE70642EB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24229F7B-217A-468D-A1B6-DEE70642EB10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
