@@ -13,8 +13,7 @@
 @if (isThinking)
 {
     <div class="spinner-overlay">
-        <div class="spinner-border" role="status">
-        </div>
+        <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
     </div>
 }
 
@@ -186,16 +185,17 @@
    {
        var currentColor = State.ActiveColor;
        var previousColor = currentColor == ChessPiece.PieceColor.White ? ChessPiece.PieceColor.Black : ChessPiece.PieceColor.White;
+       const string Message = "Jaque mate! {0} acaba de ganar!";
 
        if (Board.IsCheckmate(previousColor))
        {
            IsGameOver = true;
-           GameOverMessage = $"Checkmate! {currentColor} wins!";
+           GameOverMessage = string.Format(Message, currentColor);
        }
        else if (Board.IsCheckmate(currentColor))
        {
            IsGameOver = true;
-           GameOverMessage = $"Checkmate! {previousColor} wins!";
+           GameOverMessage = string.Format(Message, previousColor);
        }
        else if (Board.IsInCheck(currentColor))
        {

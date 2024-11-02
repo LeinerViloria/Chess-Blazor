@@ -1,0 +1,16 @@
+
+::deep .rz-button.rz-primary.rz-shade-default
+{
+    background-color: #296f88 !important;
+}
+
+::deep .rz-progressbar-indeterminate.rz-progressbar-primary .rz-progressbar-value:before, 
+::deep .rz-progressbar-indeterminate.rz-progressbar-primary .rz-progressbar-value:after
+{
+    background-color: #296f88 !important;
+}
+
+.spinner-overlay > ::deep .rz-progressbar
+{
+    width: 100%;
+}
