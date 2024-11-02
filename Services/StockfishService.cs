@@ -2,14 +2,9 @@
 
 namespace ChessAI.Services;
 
-public class StockfishService
+public class StockfishService(IJSRuntime jsRuntime)
 {
-    private readonly IJSRuntime _jsRuntime;
-
-    public StockfishService(IJSRuntime jsRuntime)
-    {
-        _jsRuntime = jsRuntime;
-    }
+    private readonly IJSRuntime _jsRuntime = jsRuntime;
 
     public async Task InitializeEngine()
     {
@@ -23,8 +18,9 @@ public class StockfishService
 
     public async Task SetDifficulty(int elo)
     {
-        await _jsRuntime.InvokeVoidAsync("setEngineOption", "UCI_Elo", elo.ToString());
-        await _jsRuntime.InvokeVoidAsync("setEngineOption", "UCI_LimitStrength", "true");
+        const string engine = "setEngineOption";
+        await _jsRuntime.InvokeVoidAsync(engine, "UCI_Elo", elo.ToString());
+        await _jsRuntime.InvokeVoidAsync(engine, "UCI_LimitStrength", "true");
     }
 
     public async Task SetThreads(int threads)
