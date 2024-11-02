@@ -15,10 +15,28 @@ public enum PieceColor
 
 public enum PieceType
 {
+    /// <summary>
+    /// Peon
+    /// </summary>
     Pawn,
+    /// <summary>
+    /// Torre
+    /// </summary>
     Rook,
+    /// <summary>
+    /// Caballo
+    /// </summary>
     Knight,
+    /// <summary>
+    /// Alfil
+    /// </summary>
     Bishop,
+    /// <summary>
+    /// Reina
+    /// </summary>
     Queen,
+    /// <summary>
+    /// Rey
+    /// </summary>
     King
 }
