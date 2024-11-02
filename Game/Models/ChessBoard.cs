@@ -34,6 +34,12 @@ public class ChessBoard
     // Tracks the total number of full moves in the game (incremented after Black’s move).
     public int FullmoveNumber { get; } = 1;
 
+    public ChessBoard(bool Initialize = false)
+    {
+        if (Initialize)
+            InitializeBoard();   
+    }
+
     #region Initialization
 
     /// <summary>

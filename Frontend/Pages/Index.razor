@@ -128,15 +128,10 @@
        return $"/images/chess-pieces/{color}{pieceType}.svg";
    }
 
-   private bool IsValidDrag(ChessPiece? piece)
-   {
-       return piece != null && piece.Color == State.ActiveColor;
-   }
-
    private void DragPiece(int row, int col)
    {
        var piece = Board.Pieces[row, col];
-       if (IsValidDrag(piece))
+       if (Utilities.IsValidDrag(State, piece))
        {
            DraggedPiecePosition = (row, col);
        }
@@ -147,14 +142,7 @@
        DraggedPiecePosition = null;
    }
 
-   private bool IsValidMove(ChessMove move)
-   {
-       var piece = Board.Pieces[move.FromRow, move.FromCol];
-       if (!IsValidDrag(piece)) return false;
-
-       var validMoves = Board.GetValidMoves(piece);
-       return validMoves.Contains((move.ToRow, move.ToCol));
-   }
+   
 
    private async Task DropPiece(int row, int col)
    {
@@ -163,11 +151,10 @@
            var (fromRow, fromCol) = DraggedPiecePosition.Value;
            var piece = Board.Pieces[fromRow, fromCol];
 
-           if (IsValidDrag(piece))
+           if (Utilities.IsValidDrag(State, piece))
            {
                var move = new ChessMove(fromRow, fromCol, row, col);
-
-               if (IsValidMove(move))
+               if (Utilities.IsValidMove(State, Board, move))
                {
                    Board.ApplyMove(move);
                    await CheckGameState();
