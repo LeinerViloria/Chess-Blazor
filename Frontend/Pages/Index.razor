@@ -3,10 +3,11 @@
 @using ChessAI.Services
 @using ChessAI.Game
 @inject StockfishService StockfishService
+@inject DialogService DialogService
 
 <div class="header">
     <h1>Ajedrez - CECAR</h1>
-    <RadzenButton Click="ResetBoard" Text="Nuevo juego" class="new-game-button" />
+    <RadzenButton Click="@(() => _ = ResetBoard())" Text="Nuevo juego" class="new-game-button" />
 </div>
 
 <!-- Spinner overlay, positioned absolutely so it doesn't push the board down -->
@@ -74,12 +75,19 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        ResetBoard();
+        _ = ResetBoard(true);
         await StockfishService.InitializeEngine();
     }
 
-    private void ResetBoard()
+    private async Task ResetBoard(bool IgnoreDialog = false)
     {
+        if (!IsGameOver && !IgnoreDialog)
+        {
+            var Reset = await DialogService.Confirm("¿Esta seguro de empezar un nuevo juego?", "Reiniciar juego", new ConfirmOptions() { OkButtonText = "Si", CancelButtonText = "No" });
+
+            if (Reset is null or false) return;
+        }
+
         Board = new ChessBoard();
         State = new GameState();
         Board.InitializeBoard();
