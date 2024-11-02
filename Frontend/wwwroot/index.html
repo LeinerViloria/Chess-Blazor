@@ -18,6 +18,7 @@
             });
         }
     </script>
+    <RadzenTheme Theme="material" @rendermode="InteractiveWebAssembly" />
 </head>
 
 <body>
@@ -31,7 +32,7 @@
         <a class="dismiss" onclick="document.getElementById('blazor-error-ui').style.display='none'">🗙</a>
     </div>
 
-<script src="_framework/blazor.webassembly.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>
     <script>
         window.addEventListener('error', event => {
             var errorMessage = event.message || 'An error occurred';
@@ -46,6 +47,7 @@
             document.getElementById("blazor-error-ui").style.display = "block";
         });
     </script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
 </body>
 
 </html>
