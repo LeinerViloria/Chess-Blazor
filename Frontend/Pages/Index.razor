@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using ChessAI.Game.Enums
+@using ChessAI.Game.Utils
 @using ChessAI.Models
 @using ChessAI.Services
 @using ChessAI.Game
@@ -32,7 +34,7 @@
                 {
                     var currentRow = row;
                     var currentCol = col;
-                    <td class="square @GetSquareColorClass(GetSquareColor(currentRow, currentCol))"
+                    <td class="square @Utilities.GetSquareColorClass(currentRow, currentCol)"
                         ondragover="event.preventDefault();"
                         @ondrop="@(() => DropPiece(currentRow, currentCol))"
                         @ondragover:preventDefault>
@@ -84,7 +86,6 @@
         if (!IsGameOver && !IgnoreDialog)
         {
             var Reset = await DialogService.Confirm("¿Esta seguro de empezar un nuevo juego?", "Reiniciar juego", new ConfirmOptions() { OkButtonText = "Si", CancelButtonText = "No" });
-
             if (Reset is null or false) return;
         }
 
@@ -107,14 +108,8 @@
         </tr>;
 
    private string GetRowLabel(int rowIndex) => (8 - rowIndex).ToString();
-
-   private enum SquareColor { Light, Dark }
-
-   private SquareColor GetSquareColor(int row, int col) => (row + col) % 2 == 0 ? SquareColor.Light : SquareColor.Dark;
-
-   private string GetSquareColorClass(SquareColor color) => color == SquareColor.Light ? "light" : "dark";
-
-   private string GetPieceColor(ChessPiece? piece) => piece != null && piece.Color == ChessPiece.PieceColor.White ? "white-piece" : "black-piece";
+   private string GetPieceColor(ChessPiece? piece) => 
+    piece != null && piece.Color is ChessPiece.PieceColor.White ? "white-piece" : "black-piece";
 
    private string GetPieceImagePath(ChessPiece? piece)
    {
