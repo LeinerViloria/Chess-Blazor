@@ -15,6 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Set up version variable
+      id: vars
+      run: echo "::set-output name=version::$(date +%s)"
+
     - name: Log in to Docker Hub
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -23,7 +27,7 @@ jobs:
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag lviloria/chessai:$(date +%s)
+      run: docker build -t lviloria/chessai:${{ steps.vars.outputs.version }} .
 
     - name: Push the Docker image
-      run: docker push lviloria/chessai:$(date +%s)
+      run: docker push lviloria/chessai:${{ steps.vars.outputs.version }}
