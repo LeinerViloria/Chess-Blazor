@@ -49,13 +49,13 @@ jobs:
         git pull origin main
         git checkout -b release_${{ steps.vars.outputs.version }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Push release branch
       run: |
         git push --set-upstream origin release_${{ steps.vars.outputs.version }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
         
     - name: Log in to Docker Hub
       env:
