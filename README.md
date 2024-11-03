@@ -1,1 +1,6 @@
-Source code used as base to implement a custom workshop: https://github.com/tjgokken/ChessAI to explain CI/CD
+Source code used as base to implement a custom workshop: https://github.com/tjgokken/ChessAI to explain CI/CD.
+
+Tools:
+  Docker
+  Ngrok
+  Jenkins
