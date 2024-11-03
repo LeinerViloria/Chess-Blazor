@@ -36,16 +36,26 @@ jobs:
       id: vars
       run: echo "::set-output name=version::$(date +%s)"
     
+    - name: Set up Git
+      run: |
+        git config --global user.email "vilorialeiner2002@gmail.com"
+        git config --global user.name "LeinerViloria"
+    
     - name: Generate release
       run: |
-        git branch | grep release_${{ steps.vars.outputs.version }} && git branch -D release_${{ steps.vars.outputs.version }}
+        git branch | grep release_${{ steps.vars.outputs.version }} && git branch -D release_${{ steps.vars.outputs.version }} || echo "No existing release branch"
         git fetch --all
         git checkout main
-        git pull
+        git pull origin main
         git checkout -b release_${{ steps.vars.outputs.version }}
-        git config --local user.email "vilorialeiner2002@gmail.com"
-        git config --local user.name "LeinerViloria"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push release branch
+      run: |
         git push --set-upstream origin release_${{ steps.vars.outputs.version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Log in to Docker Hub
       env:
